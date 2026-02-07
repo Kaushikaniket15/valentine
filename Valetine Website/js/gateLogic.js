@@ -1,5 +1,5 @@
 /* ===============================
-   🚪 GATE LOGIC WITH COUNTDOWN
+   🚪 GATE LOGIC (IST + DATE SAFE)
    =============================== */
 
 const gatesContainer = document.getElementById("gates");
@@ -16,11 +16,26 @@ const days = [
   { title: "❤️ Valentine’s Day", date: "2026-02-14", link: "#" }
 ];
 
-const today = new Date();
+/* ===============================
+   ⏰ IST DATE (DATE ONLY)
+   =============================== */
 
-/* ⏳ Countdown helper */
-function getCountdown(targetDate) {
-  const diff = targetDate - new Date();
+const nowIST = new Date(
+  new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+);
+
+const todayDateOnly = new Date(
+  nowIST.getFullYear(),
+  nowIST.getMonth(),
+  nowIST.getDate()
+);
+
+/* ===============================
+   ⏳ COUNTDOWN HELPER
+   =============================== */
+
+function getCountdown(targetEndTime) {
+  const diff = targetEndTime - new Date();
 
   if (diff <= 0) return "Opening soon 💖";
 
@@ -32,6 +47,10 @@ function getCountdown(targetDate) {
   return `${days} day${days !== 1 ? "s" : ""} ${hours} hr${hours !== 1 ? "s" : ""}`;
 }
 
+/* ===============================
+   🚪 CREATE GATES
+   =============================== */
+
 days.forEach(day => {
   const gate = document.createElement("div");
   gate.className = "gate";
@@ -40,11 +59,19 @@ days.forEach(day => {
   title.innerText = day.title;
   gate.appendChild(title);
 
-  const dayDate = new Date(day.date + "T23:59:59");
+  // Day date (DATE ONLY)
+  const parts = day.date.split("-");
+  const dayDateOnly = new Date(
+    parseInt(parts[0]),
+    parseInt(parts[1]) - 1,
+    parseInt(parts[2])
+  );
 
+  // End of that day (for countdown)
+  const dayEndTime = new Date(day.date + "T23:59:59+05:30");
 
-  if (dayDate > today) {
-    // 🔒 LOCKED GATE
+  if (dayDateOnly > todayDateOnly) {
+    // 🔒 LOCKED
     gate.classList.add("locked");
 
     const lock = document.createElement("div");
@@ -53,22 +80,21 @@ days.forEach(day => {
 
     const countdown = document.createElement("div");
     countdown.className = "countdown";
-    countdown.innerText = "Opens in " + getCountdown(dayDate);
+    countdown.innerText = "Opens in " + getCountdown(dayEndTime);
 
     gate.appendChild(lock);
     gate.appendChild(countdown);
 
   } else {
-    // 🔓 UNLOCKED GATE
+    // 🔓 UNLOCKED
     gate.classList.add("unlocked");
 
-    if (dayDate.toDateString() === today.toDateString()) {
+    if (dayDateOnly.getTime() === todayDateOnly.getTime()) {
       gate.classList.add("today");
     }
 
     gate.onclick = () => {
       gate.classList.add("open");
-
       setTimeout(() => {
         if (day.link !== "#") {
           window.location.href = day.link;
