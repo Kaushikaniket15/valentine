@@ -40,7 +40,8 @@ days.forEach(day => {
   title.innerText = day.title;
   gate.appendChild(title);
 
-  const dayDate = new Date(day.date + "T00:00:00");
+  const dayDate = new Date(day.date + "T23:59:59");
+
 
   if (dayDate > today) {
     // 🔒 LOCKED GATE
