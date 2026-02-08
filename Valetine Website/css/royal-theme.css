@@ -118,8 +118,8 @@ button {
 
 /* 🚪 CRITICAL FIX — DO NOT REMOVE */
 .gate {
-  position: relative;      /* REQUIRED FOR DOORS */
-  overflow: hidden;        /* REQUIRED FOR DOORS */
+  position: relative;
+  overflow: hidden;
 
   height: 200px;
   border-radius: 15px;
@@ -127,9 +127,14 @@ button {
   border: 2px solid #555;
 
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;        /* 🔑 */
+  justify-content: center;       /* 🔑 */
+  align-items: center;           /* 🔑 */
+  text-align: center;            /* 🔑 */
+
+  gap: 10px;                     /* 🔑 spacing consistency */
 }
+
 
 /* ===============================
    ⬅️ JOURNEY BACK BUTTON
@@ -219,3 +224,25 @@ button {
   border-radius: 20px;
   box-shadow: 0 0 40px rgba(255,215,0,0.6);
 }
+
+.countdown {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  opacity: 0.85;
+  color: #ffd700;
+}
+
+.gate h2 {
+  font-size: 1.3rem;
+  line-height: 1.4;
+  min-height: 2.8em;   /* 🔑 equal height for all titles */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gate.today {
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+}
+
+
