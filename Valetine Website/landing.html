@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Welcome My Love</title>
+
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/royal-theme.css">
+</head>
+<body>
+
+  <!-- Background Music (AUTOPLAY, NOT MUTED) -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="assets/sounds/romantic.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Music Toggle -->
+  <div class="music-toggle" onclick="toggleMusic()">🎵</div>
+
+  <!-- Background Layers -->
+  <div class="bg-blur"></div>
+  <div class="landing-bg"></div>
+  <div class="landing-overlay"></div>
+
+  <!-- Content -->
+  <div class="landing-content">
+    <h1 id="welcomeText"></h1>
+
+    <p class="love-line">
+      I made this little world of love,<br>
+      just for you ❤️
+    </p>
+
+    <div class="photo-strip">
+      <img src="assets/images/pic1.jpg">
+      <img src="assets/images/pic2.jpg">
+      <img src="assets/images/pic3.jpg">
+    </div>
+
+    <button class="journey-btn" onclick="goToJourney()">
+      Begin Our Journey 👑
+    </button>
+  </div>
+
+  <script src="js/effects.js"></script>
+</body>
+</html>

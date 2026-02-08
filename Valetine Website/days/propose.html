@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Propose Day</title>
+
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/day.css">
+</head>
+<body>
+
+  <!-- Propose Music -->
+  <audio id="roseMusic" autoplay loop>
+    <source src="../assets/sounds/propose.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Background -->
+  <div class="rose-bg"></div>
+
+  <div class="day-page">
+
+    <h1 class="day-title">💍🧎‍♂️ Propose Day</h1>
+
+    <p class="day-subtitle">
+      The day I choose you, today and always
+    </p>
+
+    <!-- MEMORY STACK -->
+    <div class="memory-stack">
+      <div class="hero-image">
+        <img src="../assets/images/propose1.jpg">
+      </div>
+
+    <div class="support-images">
+    <img src="../assets/images/propose2.jpg" alt="memory">
+    <img src="../assets/images/propose3.jpg" alt="memory">
+    <img src="../assets/images/propose4.jpg" alt="memory">
+    </div>
+
+
+    <!-- VIDEO -->
+    <div class="video-box">
+      <video controls playsinline>
+        <source src="../assets/video/propose.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <!-- MESSAGE -->
+    <div class="day-card">
+      <p class="day-message">
+        My dearest <span class="queen-name"></span>,<br><br>
+
+        Every moment with you feels like home,  
+        every conversation feels like comfort,  
+        and every silence feels complete — just because it’s with you.<br><br>
+
+        So today, on Propose Day,  
+        I want to ask you something my heart  
+        has known for a long time…
+      </p>
+    </div>
+
+    <!-- 💍 PROPOSAL INTERACTION -->
+    <div class="proposal-box" id="proposalBox">
+      <p class="proposal-question">
+        Will you be mine, forever? 💖
+      </p>
+
+      <div class="proposal-actions">
+        <button class="yes-btn" onclick="sayYes()">Yes ❤️</button>
+        <button class="yes-btn alt" onclick="sayYes()">Always 💍</button>
+      </div>
+    </div>
+
+    <!-- FINAL MESSAGE (HIDDEN INITIALLY) -->
+    <div class="final-message" id="finalMessage">
+      I knew it…<br>
+      My heart chose you long before today ❤️<br>
+      <span>– Aniket</span>
+    </div>
+
+    <!-- SHAYARI -->
+    <div class="shayari">
+      मुझे इज़हार करना नहीं आता,<br>
+      पर इश्क़ करना दिल से जानता हूँ,<br>
+      आज बस इतना पूछना है तुमसे,<br>
+      क्या ज़िंदगी भर मेरा साथ निभाओगी?<br>
+      <span>– Aniket 💍</span>
+    </div>
+
+    <button class="back-btn" onclick="goBack()">
+      ← Back to Our Journey
+    </button>
+
+  </div>
+
+  <script src="../js/dayEffects.js"></script>
+</body>
+</html>

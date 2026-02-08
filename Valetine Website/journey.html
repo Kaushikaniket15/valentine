@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Our Valentine Journey</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/royal-theme.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+  <!-- 🎵 Journey Background Music -->
+  <audio id="journeyMusic" autoplay loop>
+    <source src="assets/sounds/journey.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- 🚪 OPTIONAL Door Sound (SAFE) -->
+  <!-- If file doesn't exist, gate still works -->
+  <audio id="doorSound">
+    <source src="assets/sounds/door.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- ⬅️ Back Button -->
+  <button class="journey-back" onclick="goBack()">← Back</button>
+
+  <!-- Title -->
+  <h1 class="journey-title">Our Royal Valentine Journey 👑</h1>
+
+  <!-- 💕 Gentle Hint -->
+  <p class="journey-hint">
+    Some hearts hide little memories… 💕
+  </p>
+
+  <!-- 🚪 Gates Container -->
+  <div class="gates-container" id="gates"></div>
+
+  <!-- 💖 Floating Hearts -->
+  <div id="hearts-container"></div>
+
+  <!-- 💘 Image Popup -->
+  <div class="image-popup" id="imagePopup" onclick="closePopup(event)">
+    <img id="popupImage" onclick="event.stopPropagation()">
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/gateLogic.js"></script>
+  <script src="js/journeyEffects.js"></script>
+</body>
+</html>
