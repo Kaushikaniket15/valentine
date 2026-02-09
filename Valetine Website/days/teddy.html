@@ -2,42 +2,250 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Rose Day</title>
+  <title>🧸 Teddy Day</title>
 
   <link rel="stylesheet" href="../css/main.css">
   <link rel="stylesheet" href="../css/day.css">
+
+  <style>
+    body {
+      background: linear-gradient(to bottom, #f8cdda, #fbc2eb);
+    }
+
+    audio { display: none; }
+
+    .teddy-hero img {
+      width: 260px;
+      border-radius: 20px;
+      box-shadow: 0 0 35px rgba(255,105,180,0.6);
+      margin: 25px 0;
+    }
+
+    .price-tag {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 30px;
+    }
+
+    /* 🧠 MEMORY GAME */
+    .game-board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      max-width: 360px;
+      margin: 30px auto;
+    }
+
+    .card {
+      height: 100px;
+      background: #fff;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(0,0,0,0.15);
+      user-select: none;
+    }
+
+    .card.flipped {
+      background: #ffdee9;
+    }
+
+    /* 🧸 NAME TEDDY */
+    .name-box {
+      margin: 35px 0;
+      text-align: center;
+    }
+
+    .name-box input {
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: none;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    .name-box button {
+      margin-top: 10px;
+      padding: 8px 22px;
+      border-radius: 25px;
+      border: none;
+      background: hotpink;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* 🏆 RESULT */
+    .result-box {
+      display: none;
+      margin-top: 40px;
+      padding: 25px;
+      background: rgba(18, 2, 2, 0.7);
+      border-radius: 20px;
+      text-align: center;
+      animation: fadeIn 1s ease;
+    }
+
+    /* 🧸 RAIN */
+    .rain {
+      position: fixed;
+      top: -40px;
+      font-size: 28px;
+      animation: fall linear infinite;
+      z-index: 999;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-  <div class="day-page">
-    <h1 class="day-title">🌹 Rose Day</h1>
+<!-- 🎵 MUSIC -->
+<audio autoplay loop>
+  <source src="../assets/sounds/romantic.mp3" type="audio/mpeg">
+</audio>
 
-    <p class="day-subtitle">
-      For the one who makes my life bloom
+<div class="day-page">
+
+  <h1 class="day-title">🧸 Teddy Day</h1>
+  <p class="day-subtitle">Because every hug feels warmer with you</p>
+
+  <!-- 🧸 TEDDY IMAGE -->
+  <div class="teddy-hero">
+    <img src="../assets/images/teddy.jpg" alt="My Teddy for You">
+    <p class="price-tag">
+      Teddy Price: ₹250<br>
+      <em>But for you… priceless ❤️</em>
     </p>
-
-    <div class="day-card">
-      <p class="day-message">
-        My dearest <span class="queen-name"></span>,<br><br>
-
-        Just like this rose, my love for you is soft,
-        beautiful, and endlessly growing.<br><br>
-
-        Every petal reminds me of your smile,
-        every fragrance reminds me of your presence,
-        and every thorn reminds me that love is precious
-        because it must be protected.<br><br>
-
-        This rose is not just a flower,
-        it’s my heart — placed gently in your hands ❤️
-      </p>
-    </div>
-
-    <button class="back-btn" onclick="window.location.href='../journey.html'">
-      ← Back to Our Journey
-    </button>
   </div>
 
-  <script src="../js/dayEffects.js"></script>
+  <!-- 💌 MESSAGE -->
+  <div class="day-card">
+    <p class="day-message">
+      My little teddy 🧸,<br><br>
+      When I can’t hug you,<br>
+      I wish this teddy could do it for me.<br><br>
+      Win it and keep my hugs safe with you ❤️
+    </p>
+  </div>
+
+  <!-- 📝 SHAYARI -->
+  <div class="day-card">
+    <p class="day-message">
+      ये टेडी सिर्फ खिलौना नहीं है,<br>
+      इसमें मेरी बाहों की गर्मी है,<br>
+      जब मैं पास ना होऊँ कभी,<br>
+      इसे गले लगाना — यही मेरी कमी है 🧸❤️<br><br>
+      — Aniket
+    </p>
+  </div>
+
+  <!-- 🎮 MEMORY GAME -->
+  <h2>🧠 Save the Teddy</h2>
+  <p>Match all pairs to bring the above teddy home 🧸</p>
+
+  <div class="game-board" id="gameBoard"></div>
+
+  <!-- 🧸 NAME THE TEDDY -->
+  <div class="name-box">
+    <p>Name our teddy 🧸</p>
+    <input type="text" id="teddyName" placeholder="Enter teddy name">
+    <br>
+    <button onclick="saveName()">Save Name</button>
+  </div>
+
+  <!-- 🏆 RESULT -->
+  <div class="result-box" id="resultBox"></div>
+
+  <button class="back-btn" onclick="window.location.href='../journey.html'">
+    ← Back to Our Journey
+  </button>
+</div>
+
+<script>
+/* 🧠 MEMORY GAME */
+const symbols = ["🧸","🧸","❤️","❤️","🎀","🎀"];
+let first=null, lock=false, matched=0;
+
+symbols.sort(()=>0.5-Math.random());
+
+const board=document.getElementById("gameBoard");
+
+symbols.forEach(sym=>{
+  const card=document.createElement("div");
+  card.className="card";
+  card.innerText="❓";
+
+  card.onclick=()=>{
+    if(lock||card.classList.contains("flipped"))return;
+
+    card.innerText=sym;
+    card.classList.add("flipped");
+
+    if(!first){
+      first={card,sym};
+    }else{
+      lock=true;
+      if(first.sym===sym){
+        matched+=2;
+        first=null;
+        lock=false;
+        if(matched===symbols.length)winTeddy();
+      }else{
+        setTimeout(()=>{
+          card.innerText="❓";
+          card.classList.remove("flipped");
+          first.card.innerText="❓";
+          first.card.classList.remove("flipped");
+          first=null;
+          lock=false;
+        },900);
+      }
+    }
+  };
+  board.appendChild(card);
+});
+
+/* 🏆 WIN */
+function winTeddy(){
+  const box=document.getElementById("resultBox");
+  box.style.display="block";
+  box.innerHTML=`
+    <h3>🎉 You saved the Teddy! 🧸</h3>
+    You have officially won your Teddy Day gift ❤️<br><br>
+    📸 Please take a screenshot and send it to me 💖
+  `;
+  teddyRain();
+}
+
+/* 🧸 NAME */
+function saveName(){
+  const name=document.getElementById("teddyName").value;
+  if(name){
+    alert(`Our teddy is now named "${name}" 🧸❤️`);
+  }
+}
+
+/* 🧸 RAIN */
+function teddyRain(){
+  for(let i=0;i<40;i++){
+    const r=document.createElement("div");
+    r.className="rain";
+    r.innerText="🧸";
+    r.style.left=Math.random()*100+"vw";
+    r.style.animationDuration=(3+Math.random()*3)+"s";
+    document.body.appendChild(r);
+    setTimeout(()=>r.remove(),6000);
+  }
+}
+</script>
+
 </body>
 </html>

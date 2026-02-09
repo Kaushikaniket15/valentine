@@ -9,7 +9,7 @@ const days = [
   { title: "🌹 Rose Day", date: "2026-02-07", link: "days/rose.html" },
   { title: "💍 Propose Day", date: "2026-02-08", link: "days/propose.html" },
   { title: "🍫 Chocolate Day", date: "2026-02-09", link: "days/chocolate.html" },
-  { title: "🧸 Teddy Day", date: "2026-02-10", link: "#" },
+  { title: "🧸 Teddy Day", date: "2026-02-10", link: "days/teddy.html" },
   { title: "🤝 Promise Day", date: "2026-02-11", link: "#" },
   { title: "🤗 Hug Day", date: "2026-02-12", link: "#" },
   { title: "💋 Kiss Day", date: "2026-02-13", link: "#" },
