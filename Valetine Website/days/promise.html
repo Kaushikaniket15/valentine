@@ -2,42 +2,232 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Rose Day</title>
+  <title>🤍 Promise Day</title>
 
   <link rel="stylesheet" href="../css/main.css">
   <link rel="stylesheet" href="../css/day.css">
+
+  <style>
+    body {
+      background: linear-gradient(to bottom, #fdfcfb, #f6f2ec);
+      color: #3b2f2f;
+    }
+
+    audio { display: none; }
+
+    .letter {
+      background: rgba(255,255,255,0.85);
+      padding: 35px;
+      border-radius: 18px;
+      max-width: 750px;
+      margin: 40px auto;
+      box-shadow: 0 0 40px rgba(0,0,0,0.08);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      animation: fadeIn 1.5s ease;
+    }
+
+    /* 🤍 PROMISE CARDS */
+    .promise-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 25px;
+      margin: 50px auto;
+      max-width: 900px;
+    }
+
+    .promise-card {
+      background: linear-gradient(145deg, #fff, #f1ede6);
+      border-radius: 16px;
+      padding: 25px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      transition: transform 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .promise-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .promise-front {
+      font-size: 2rem;
+    }
+
+    .promise-back {
+      display: none;
+      font-size: 0.95rem;
+      margin-top: 10px;
+      animation: fadeIn 0.8s ease;
+    }
+
+    .promise-card.open .promise-front {
+      display: none;
+    }
+
+    .promise-card.open .promise-back {
+      display: block;
+    }
+
+    /* ✍️ HER PROMISE */
+    .her-promise {
+      margin: 50px auto;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .her-promise textarea {
+      width: 100%;
+      padding: 15px;
+      border-radius: 14px;
+      border: none;
+      font-size: 1rem;
+      resize: none;
+    }
+
+    .her-promise button {
+      margin-top: 15px;
+      padding: 10px 30px;
+      border-radius: 25px;
+      border: none;
+      background: #d4af37;
+      color: #3b2f2f;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* 🔏 SEAL */
+    .seal {
+      text-align: center;
+      margin: 50px 0;
+    }
+
+    .seal button {
+      padding: 14px 40px;
+      border-radius: 30px;
+      border: none;
+      background: linear-gradient(135deg, #d4af37, #f5e6a7);
+      font-size: 1.05rem;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(212,175,55,0.6);
+    }
+
+    .seal-message {
+      margin-top: 20px;
+      display: none;
+      font-style: italic;
+      animation: fadeIn 1s ease;
+    }
+  </style>
 </head>
+
 <body>
 
-  <div class="day-page">
-    <h1 class="day-title">🌹 Rose Day</h1>
+<!-- 🎵 SOFT MUSIC -->
+<audio autoplay loop>
+  <source src="../assets/sounds/promise.mp3" type="audio/mpeg">
+</audio>
 
-    <p class="day-subtitle">
-      For the one who makes my life bloom
-    </p>
+<div class="day-page">
 
-    <div class="day-card">
-      <p class="day-message">
-        My dearest <span class="queen-name"></span>,<br><br>
+  <h1 class="day-title">🤍 Promise Day</h1>
+  <p class="day-subtitle">Not promises to impress… promises to keep.</p>
 
-        Just like this rose, my love for you is soft,
-        beautiful, and endlessly growing.<br><br>
+  <!-- ✉️ LETTER -->
+  <div class="letter">
+    My love,<br><br>
 
-        Every petal reminds me of your smile,
-        every fragrance reminds me of your presence,
-        and every thorn reminds me that love is precious
-        because it must be protected.<br><br>
+    I don’t promise you perfection.<br>
+    I promise you honesty.<br><br>
 
-        This rose is not just a flower,
-        it’s my heart — placed gently in your hands ❤️
-      </p>
-    </div>
+    I don’t promise that life will always be easy,<br>
+    but I promise I’ll never walk away.<br><br>
 
-    <button class="back-btn" onclick="window.location.href='../journey.html'">
-      ← Back to Our Journey
-    </button>
+    These are not words meant just for today,<br>
+    they are promises meant for always 🤍
   </div>
 
-  <script src="../js/dayEffects.js"></script>
+  <!-- 🤍 PROMISE CARDS -->
+  <h2 style="text-align:center;">Promises I Make to You</h2>
+
+  <div class="promise-cards">
+    <div class="promise-card" onclick="openCard(this)">
+      <div class="promise-front">🤍</div>
+      <div class="promise-back">I promise to always respect your feelings.</div>
+    </div>
+
+    <div class="promise-card" onclick="openCard(this)">
+      <div class="promise-front">🔒</div>
+      <div class="promise-back">I promise your secrets are safe with me.</div>
+    </div>
+
+    <div class="promise-card" onclick="openCard(this)">
+      <div class="promise-front">🌧️</div>
+      <div class="promise-back">I promise to hold you on your worst days.</div>
+    </div>
+
+    <div class="promise-card" onclick="openCard(this)">
+      <div class="promise-front">✨</div>
+      <div class="promise-back">I promise to celebrate your smallest wins.</div>
+    </div>
+
+    <div class="promise-card" onclick="openCard(this)">
+      <div class="promise-front">🫂</div>
+      <div class="promise-back">I promise to choose you every single day.</div>
+    </div>
+  </div>
+
+  <!-- ✍️ HER PROMISE -->
+  <div class="her-promise">
+    <p>If you ever want to… write one promise for me 🤍</p>
+    <textarea id="herPromise" rows="3" placeholder="Write your promise here..."></textarea><br>
+    <button onclick="saveHerPromise()">Save Promise</button>
+  </div>
+
+  <!-- 📝 SHAYARI -->
+  <div class="day-card">
+    <p class="day-message">
+      वादा तो बहुत लोग करते हैं,<br>
+      निभाने का हौसला कम रखते हैं,<br>
+      मैं वादा कम करूँगा,<br>
+      मगर आख़िरी साँस तक निभाऊँगा 🤍<br><br>
+      — Aniket
+    </p>
+  </div>
+
+  <!-- 🔏 SEAL -->
+  <div class="seal">
+    <button onclick="sealPromises()">I Accept These Promises 🤍</button>
+    <div class="seal-message" id="sealMessage">
+      These promises are now part of our story.<br>
+      Promise Day 2026 🤍
+    </div>
+  </div>
+
+  <button class="back-btn" onclick="window.location.href='../journey.html'">
+    ← Back to Our Journey
+  </button>
+</div>
+
+<script>
+function openCard(card) {
+  card.classList.add("open");
+}
+
+function saveHerPromise() {
+  const text = document.getElementById("herPromise").value;
+  if (text) {
+    localStorage.setItem("herPromise", text);
+    alert("This promise is safely kept with my heart ❤️");
+  }
+}
+
+function sealPromises() {
+  document.getElementById("sealMessage").style.display = "block";
+}
+</script>
+
 </body>
 </html>
