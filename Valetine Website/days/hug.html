@@ -1,43 +1,362 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Rose Day</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>🤗 Hug Day</title>
 
-  <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/day.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Quicksand',sans-serif;
+  background:linear-gradient(to bottom,#fff0ea,#ffd6cc,#ffb7b2);
+  min-height:100vh;
+  color:#4a2030;
+  overflow-x:hidden;
+  transition:background 0.4s ease;
+}
+
+h1,h2{font-family:'Playfair Display',serif;}
+
+.section{
+  max-width:900px;
+  margin:80px auto;
+  padding:0 20px;
+  opacity:0;
+  transform:translateY(40px);
+  transition:opacity 0.8s ease,transform 0.8s ease;
+}
+
+.section.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* HERO */
+.hero{
+  position:relative;
+  height:80vh;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hero img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:110%;
+  object-fit:cover;
+  transform:translateY(0);
+  transition:transform 0.3s ease-out;
+}
+
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom,
+  rgba(255,240,234,0.3),
+  rgba(255,183,178,0.7),
+  rgba(255,240,234,0.95));
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  color:#4a2030;
+}
+
+.hero-content .emoji{
+  font-size:60px;
+}
+
+.hero-content h1{
+  font-size:3.2rem;
+}
+
+.hero-content p{
+  font-size:1.2rem;
+  margin-top:10px;
+  color:#7a4055;
+}
+
+/* CARD */
+.card{
+  background:rgba(255,248,245,0.92);
+  padding:35px;
+  border-radius:20px;
+  text-align:center;
+  line-height:1.9;
+  box-shadow:0 6px 30px rgba(200,80,100,0.15);
+}
+
+/* PHOTO GRID */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.photo-grid img {
+  width: 100%;
+  aspect-ratio: 3 / 4;   /* Perfect portrait ratio */
+  object-fit: cover;     /* Prevent stretching */
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.photo-grid img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 35px rgba(255,111,145,0.35);
+}
+
+/* LIGHTBOX */
+.lightbox{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+
+.lightbox img{
+  max-width:85%;
+  max-height:85%;
+  border-radius:20px;
+}
+
+/* HUG INTERACTION */
+.hug-section{text-align:center;}
+
+.hug-btn{
+  padding:16px 44px;
+  border-radius:50px;
+  border:none;
+  background:linear-gradient(135deg,#ff6f91,#ff9a76);
+  color:white;
+  font-size:1.1rem;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 0 25px rgba(255,111,145,0.5);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+
+.hug-btn.glow{
+  box-shadow:0 0 45px rgba(255,80,120,0.9);
+  transform:scale(1.05);
+}
+
+.progress-bar{
+  width:280px;
+  height:10px;
+  background:rgba(255,255,255,0.5);
+  border-radius:20px;
+  margin:20px auto;
+  overflow:hidden;
+}
+
+.progress-fill{
+  height:100%;
+  width:0%;
+  border-radius:20px;
+  background:linear-gradient(90deg,#ff6f91,#ff3e6c);
+  transition:width 0.1s;
+}
+
+.hug-result{
+  display:none;
+  margin-top:25px;
+  padding:24px;
+  border-radius:20px;
+  background:rgba(255,248,245,0.95);
+  box-shadow:0 4px 24px rgba(200,80,100,0.15);
+}
+
+/* FALLING HEARTS */
+.fall-heart{
+  position:fixed;
+  top:-40px;
+  font-size:24px;
+  animation:fallDown linear forwards;
+  pointer-events:none;
+}
+
+@keyframes fallDown{
+  to{transform:translateY(110vh) rotate(360deg);opacity:0;}
+}
+
+.back-btn{
+  display:block;
+  margin:60px auto;
+  padding:10px 30px;
+  border-radius:25px;
+  border:none;
+  background:#ff6f91;
+  color:white;
+  cursor:pointer;
+}
+</style>
 </head>
+
 <body>
 
-  <div class="day-page">
-    <h1 class="day-title">🌹 Rose Day</h1>
+<!-- 🎵 SOFT MUSIC -->
+<audio autoplay loop>
+  <source src="../assets/sounds/hug.mp3" type="audio/mpeg">
+</audio>
 
-    <p class="day-subtitle">
-      For the one who makes my life bloom
-    </p>
-
-    <div class="day-card">
-      <p class="day-message">
-        My dearest <span class="queen-name"></span>,<br><br>
-
-        Just like this rose, my love for you is soft,
-        beautiful, and endlessly growing.<br><br>
-
-        Every petal reminds me of your smile,
-        every fragrance reminds me of your presence,
-        and every thorn reminds me that love is precious
-        because it must be protected.<br><br>
-
-        This rose is not just a flower,
-        it’s my heart — placed gently in your hands ❤️
-      </p>
-    </div>
-
-    <button class="back-btn" onclick="window.location.href='../journey.html'">
-      ← Back to Our Journey
-    </button>
+<!-- HERO -->
+<div class="hero">
+  <img src="../assets/images/hug-hero.jpg" id="heroImg">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="emoji">🤗</div>
+    <h1>Hug Day</h1>
+    <p>Some hugs last longer than words.</p>
   </div>
+</div>
 
-  <script src="../js/dayEffects.js"></script>
+<!-- LETTER -->
+<div class="section">
+  <div class="card">
+    My love,<br><br>
+    If I could pause the world, I would hold you longer.<br>
+    A hug from me isn't just arms around you…<br>
+    it's comfort, protection, and home 🤍
+  </div>
+</div>
+
+<!-- PHOTOS -->
+<div class="section">
+  <div class="photo-grid">
+    <img src="../assets/images/hug1.jpg">
+    <!-- <img src="../assets/images/hug2.jpg"> -->
+    <img src="../assets/images/hug3.jpg">
+    <img src="../assets/images/hug4.jpg">
+  </div>
+</div>
+
+<!-- HUG INTERACTION -->
+<div class="section hug-section">
+  <button class="hug-btn" id="hugBtn">Press & Hold to Hug Me 🤗</button>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <div class="hug-result" id="hugResult">
+    <strong>You just gave me the longest hug ❤️</strong><br><br>
+    This hug is redeemable in real life 😌<br>
+    📸 Take a screenshot and send it to me 💖
+  </div>
+</div>
+
+<!-- SHAYARI -->
+<div class="section">
+  <div class="card">
+    तेरी बाहों में जो सुकून मिलता है,<br>
+    वो किसी और जगह नहीं मिलता,<br>
+    बस यूँ ही गले लगाकर रखना,<br>
+    यही मेरा सबसे बड़ा हक़ बनता है 🤗<br><br>
+    — Aniket
+  </div>
+</div>
+
+<button class="back-btn" onclick="window.location.href='../journey.html'">
+← Back to Our Journey
+</button>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <img id="lightboxImg">
+</div>
+
+<script>
+// PARALLAX
+window.addEventListener("scroll",()=>{
+  document.getElementById("heroImg").style.transform=
+  "translateY(" + window.scrollY*0.3 + "px)";
+});
+
+// SCROLL FADE
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add("visible");}
+  });
+},{threshold:0.15});
+
+document.querySelectorAll(".section").forEach(sec=>{
+  observer.observe(sec);
+});
+
+// LIGHTBOX
+const lightbox=document.getElementById("lightbox");
+const lightboxImg=document.getElementById("lightboxImg");
+document.querySelectorAll(".photo-grid img").forEach(img=>{
+  img.addEventListener("click",()=>{
+    lightbox.style.display="flex";
+    lightboxImg.src=img.src;
+  });
+});
+lightbox.addEventListener("click",()=>lightbox.style.display="none");
+
+// HUG LOGIC
+let progress=0,interval=null,done=false;
+const btn=document.getElementById("hugBtn");
+const fill=document.getElementById("progressFill");
+const result=document.getElementById("hugResult");
+
+function start(){
+  if(done)return;
+  btn.classList.add("glow");
+  document.body.style.background="linear-gradient(to bottom,#ffb7b2,#ff6f91)";
+  interval=setInterval(()=>{
+    if(progress>=100){clearInterval(interval);complete();}
+    else{progress+=2;fill.style.width=progress+"%";}
+  },100);
+}
+
+function stop(){
+  btn.classList.remove("glow");
+  clearInterval(interval);
+  if(!done){
+    progress=0;
+    fill.style.width="0%";
+    document.body.style.background="linear-gradient(to bottom,#fff0ea,#ffd6cc,#ffb7b2)";
+  }
+}
+
+function complete(){
+  done=true;
+  result.style.display="block";
+  heartRain();
+}
+
+function heartRain(){
+  for(let i=0;i<40;i++){
+    const h=document.createElement("div");
+    h.className="fall-heart";
+    h.innerText="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(3+Math.random()*3)+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+  }
+}
+
+btn.addEventListener("mousedown",start);
+btn.addEventListener("mouseup",stop);
+btn.addEventListener("mouseleave",stop);
+btn.addEventListener("touchstart",start);
+btn.addEventListener("touchend",stop);
+</script>
+
 </body>
 </html>
