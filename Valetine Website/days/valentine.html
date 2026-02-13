@@ -1,40 +1,801 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Valentine’s Day</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>❤️ Valentine’s Day</title>
 
-  <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/day.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Georgia',serif;
+  background:linear-gradient(to bottom,#2b001f,#120010);
+  color:white;
+  overflow-x:hidden;
+  scroll-behavior:smooth;
+}
+
+/* ✨ SPARKLE BACKGROUND */
+.sparkle{
+  position:fixed;
+  width:4px;
+  height:4px;
+  background:white;
+  border-radius:50%;
+  opacity:0.8;
+  animation:twinkle 2s infinite alternate;
+  z-index:-1;
+}
+@keyframes twinkle{
+  from{opacity:0.2;transform:scale(0.5);}
+  to{opacity:1;transform:scale(1.5);}
+}
+
+/* HERO */
+.hero{
+  height:100vh;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  overflow:hidden;
+}
+.hero img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:blur(8px) brightness(0.4);
+}
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.2),rgba(0,0,0,0.9));
+}
+.hero-content{
+  position:relative;
+  z-index:2;
+  animation:fadeIn 3s ease;
+}
+.hero h1{
+  font-size:3.5rem;
+  color:gold;
+}
+.hero p{
+  margin-top:15px;
+  font-size:1.2rem;
+  opacity:0.85;
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(30px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* SECTION */
+.section{
+  padding:120px 20px;
+  text-align:center;
+}
+
+/* ===== TIMELINE UPGRADE ===== */
+
+.section h2{
+  font-size:2.2rem;
+  margin-bottom:70px;
+  animation:thump 2s infinite;
+}
+
+@keyframes thump{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.05);}
+}
+
+.timeline{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:50px;
+  perspective:1000px;
+}
+
+.flip-card{
+  width:250px;
+  aspect-ratio:3/4;
+  cursor:pointer;
+  transition:transform 0.4s ease;
+}
+
+.flip-card:hover{
+  transform:translateY(-10px) scale(1.05);
+}
+
+.flip-inner{
+  width:100%;
+  height:100%;
+  position:relative;
+  transform-style:preserve-3d;
+  transition:transform 0.9s ease;
+}
+
+.flip-card.flipped .flip-inner{
+  transform:rotateY(180deg);
+}
+
+.flip-front,
+.flip-back{
+  position:absolute;
+  width:100%;
+  height:100%;
+  border-radius:25px;
+  backface-visibility:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+  box-shadow:0 0 30px rgba(255,215,0,0.2);
+}
+
+/* FRONT */
+.flip-front{
+  background:linear-gradient(145deg,#3a002b,#1a0014);
+  font-size:1.2rem;
+  font-weight:bold;
+  color:gold;
+  text-shadow:0 0 15px rgba(255,215,0,0.6);
+}
+
+/* BACK */
+.flip-back{
+  transform:rotateY(180deg);
+  overflow:hidden;
+  background:black;
+}
+
+.flip-back img,
+.flip-back video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:25px;
+  transition:transform 0.6s ease;
+}
+
+.flip-back img:hover,
+.flip-back video:hover{
+  transform:scale(1.08);
+}
+
+/* YEAR WATERMARK */
+.flip-back::after{
+  content:"Forever ♾️";
+  position:absolute;
+  bottom:10px;
+  right:15px;
+  font-size:0.8rem;
+  color:white;
+  opacity:0.7;
+}
+
+/* HEART REVEAL */
+.hearts{
+  font-size:40px;
+  cursor:pointer;
+}
+.reason{
+  margin-top:20px;
+  display:none;
+  font-style:italic;
+}
+
+/* PROPOSAL */
+.proposal button{
+  padding:12px 30px;
+  margin:10px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(135deg,gold,#ffcc33);
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* LOVE METER */
+.meter-bar{
+  width:300px;
+  height:15px;
+  background:#333;
+  margin:20px auto;
+  border-radius:20px;
+  overflow:hidden;
+}
+.meter-fill{
+  width:0%;
+  height:100%;
+  background:linear-gradient(to right,#ff0066,gold);
+}
+
+/* RAIN */
+.rain{
+  position:fixed;
+  top:-40px;
+  font-size:24px;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* ENDING */
+.ending{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:1.5rem;
+  opacity:0;
+  transition:2s;
+}
+.ending.show{opacity:1;}
+
+.back{
+  display:block;
+  margin:60px auto;
+  padding:10px 30px;
+  border-radius:30px;
+  border:2px solid gold;
+  background:transparent;
+  color:gold;
+  cursor:pointer;
+}
+
+.hand-section{
+  margin-top:80px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:60vh;
+}
+
+.hand-video{
+  width:280px;
+  max-width:90%;
+  border-radius:25px;
+  box-shadow:0 0 40px rgba(255,215,0,0.6);
+  border:3px solid gold;
+  transition:transform 0.6s ease, opacity 1.5s ease;
+  opacity:0;
+  transform:translateY(40px);
+}
+
+
+.hand-caption{
+  margin-top:25px;
+  font-style:italic;
+  font-size:1.2rem;
+  color:#ffd700;
+  line-height:1.7;
+  max-width:500px;
+}
+
+/* 💓 HEART SECTION */
+.heart-section{
+  text-align:center;
+  position:relative;
+}
+
+.heart-wrapper{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-bottom:40px;
+}
+
+.pinch-heart{
+  font-size:90px;
+  cursor:pointer;
+  position:relative;
+  animation:beat 1.2s infinite;
+  transition:transform 0.2s;
+}
+
+.pinch-heart:hover{
+  transform:scale(1.1);
+}
+
+@keyframes beat{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.2);}
+}
+
+.pinch-text{
+  font-size:14px;
+  position:absolute;
+  bottom:-20px;
+  width:100%;
+}
+
+/* 📸 POPPING PHOTOS */
+.photo-pop-area{
+  position:relative;
+  min-height:300px;
+  margin-top:40px;
+}
+
+.pop-photo{
+  position:absolute;
+  width:160px;
+  height:200px;
+  object-fit:cover;
+  border-radius:15px;
+  box-shadow:0 0 25px rgba(255,215,0,0.7);
+  animation:popUp 0.6s ease;
+}
+
+@keyframes popUp{
+  from{transform:scale(0.3) rotate(-10deg);opacity:0;}
+  to{transform:scale(1) rotate(0deg);opacity:1;}
+}
+
+.final-message{
+  display:none;
+  margin-top:60px;
+  font-size:1.8rem;
+  color:gold;
+  animation:fadeLove 1.5s ease forwards;
+}
+
+@keyframes fadeLove{
+  from{opacity:0; transform:translateY(40px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* 💌 FINAL LOVE CHECK */
+.love-check-box input{
+  padding:12px 25px;
+  border-radius:30px;
+  border:none;
+  margin-right:10px;
+}
+
+.love-check-box button{
+  padding:12px 25px;
+  border-radius:30px;
+  border:none;
+  background:gold;
+  cursor:pointer;
+}
+
+.no-video-box{
+  display:none;
+  margin-top:40px;
+  animation:fadeLove 1s ease;
+}
+
+/* 💛 INPUT SUCCESS GLOW */
+.input-success{
+  animation:inputGlow 1.5s ease infinite alternate;
+}
+
+@keyframes inputGlow{
+  from{
+    box-shadow:0 0 10px gold;
+  }
+  to{
+    box-shadow:0 0 35px gold, 0 0 60px rgba(255,215,0,0.6);
+  }
+}
+
+/* 🌌 ZOOM MODE */
+.zoom-mode{
+  transform:scale(1.05);
+  transition:transform 2s ease;
+}
+
+/* ✨ GOLD PARTICLES */
+.gold-particle{
+  position:fixed;
+  width:6px;
+  height:6px;
+  background:gold;
+  border-radius:50%;
+  pointer-events:none;
+  animation:particleMove 1.5s ease-out forwards;
+  z-index:9999;
+}
+
+@keyframes particleMove{
+  to{
+    transform:translate(var(--x), var(--y));
+    opacity:0;
+  }
+}
+
+
+</style>
 </head>
+
 <body>
 
-  <div class="day-page">
-    <h1 class="day-title">❤️ Valentine’s Day</h1>
+<audio autoplay loop>
+  <source src="../assets/sounds/valentine.mp3" type="audio/mpeg">
+</audio>
 
-    <p class="day-subtitle">
-      The grand finale of my love story
-    </p>
+<audio id="typingHeartbeat" loop>
+  <source src="../assets/sounds/heartbeat.mp3" type="audio/mpeg">
+</audio>
 
-    <div class="day-card">
-      <p class="day-message">
-        My forever <span class="queen-name"></span>,<br><br>
 
-        If love had a face, it would look like you.<br>
-        If love had a voice, it would sound like your laugh.<br>
-        If love had a home, it would be my heart — where you live forever.<br><br>
+<!-- HERO -->
+<div class="hero">
+  <img src="../assets/images/valentine1.jpg">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p>From Rose Day 🌹 to this moment ❤️</p>
+    <h1>Happy Valentine’s Day, Nikkia 💖</h1>
+    <p>This isn’t just a day… this is us.</p>
+  </div>
+</div>
 
-        This website ends here…  
-        but my love for you doesn’t.  
-        It never will ❤️
-      </p>
+<!-- TIMELINE -->
+<div class="section">
+  <h2>✨ Our Journey So Far ❤️</h2>
+
+  <div class="timeline">
+
+    <div class="flip-card" onclick="flipCard(this)">
+      <div class="flip-inner">
+        <div class="flip-front">🌸 First Meet 💫</div>
+        <div class="flip-back">
+          <img src="../assets/images/first_meet.jpg">
+        </div>
+      </div>
     </div>
 
-    <button class="back-btn" onclick="window.location.href='../journey.html'">
-      ← Back to Our Journey
-    </button>
+    <div class="flip-card" onclick="flipCard(this)">
+      <div class="flip-inner">
+        <div class="flip-front">🎬 First Date 💖</div>
+        <div class="flip-back">
+          <video src="../assets/images/first_date.mp4" autoplay muted loop></video>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="flipCard(this)">
+      <div class="flip-inner">
+        <div class="flip-front">🌄 First Trip ✈️</div>
+        <div class="flip-back">
+          <img src="../assets/images/first_trip.jpg">
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="flipCard(this)">
+      <div class="flip-inner">
+        <div class="flip-front">🎓 First Ramp 🌟</div>
+        <div class="flip-back">
+          <img src="../assets/images/first_ramp.jpg">
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="flipCard(this)">
+      <div class="flip-inner">
+        <div class="flip-front">📸 Last College Pic ♾️</div>
+        <div class="flip-back">
+          <img src="../assets/images/last_clg.jpg">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- WHY I CHOOSE YOU -->
+<div class="section">
+  <h2>Why I Choose You ❤️</h2>
+  <div class="hearts" onclick="revealReason()">❤️ ❤️ ❤️ ❤️ ❤️</div>
+  <div class="reason" id="reason">
+    You understand me. You calm my chaos.  
+    You are my strength, my peace, my home.
+  </div>
+</div>
+
+<!-- PROPOSAL -->
+<div class="section proposal">
+  <h2>Will You Be My Forever Valentine?</h2>
+  <button onclick="yesClicked()">❤️ YES</button>
+  <button onclick="yesClicked()">😌 YES, ALWAYS</button>
+</div>
+
+<!-- LOVE METER -->
+<div class="section">
+  <h2>Our Forever Meter 💕</h2>
+  <div class="meter-bar">
+    <div class="meter-fill" id="meterFill"></div>
+  </div>
+  <button onclick="increaseLove()">Add Love 💖</button>
+</div>
+
+<!-- LETTER -->
+<div class="section">
+  I don’t promise perfection.  
+  I promise presence.  
+  I promise to build forever with you. ❤️  
+  — Aniket
+</div>
+
+  <div class="hand-section">
+    <video class="hand-video" src="../assets/images/hand.mp4" autoplay muted loop playsinline></video>
+    <div class="hand-caption">
+      Just like this, hold my hand forever 🤝❤️<br>
+      and we will walk through all highs and lows together.
+    </div>
   </div>
 
-  <script src="../js/dayEffects.js"></script>
+</div>
+
+<!-- 💓 PINCH MY HEART SECTION -->
+<div class="section heart-section">
+
+  <h2 style="margin-bottom:60px;">💞 A Little Surprise For You 💞</h2>
+
+  <div class="heart-wrapper">
+    <div class="pinch-heart" id="pinchHeart">
+      💖
+      <div class="pinch-text">Pinch Me</div>
+    </div>
+  </div>
+
+  <div class="photo-pop-area" id="photoPopArea"></div>
+  <div class="final-message" id="finalMessage">
+  ❤️ Thank you for racing my heart so fast, always ❤️
+</div>
+
+
+</div>
+
+
+<!-- 💌 FINAL LOVE CHECK -->
+<div class="section love-check-section">
+
+  <h2 style="margin-bottom:40px;">💌 Write Something Lovely Here</h2>
+
+  <div class="love-check-box" id="loveCheckBox">
+    <input type="text" id="finalLoveInput" placeholder="Type something lovely...">
+    <button onclick="checkFinalLove()">Submit</button>
+    <p id="finalLoveResult" style="margin-top:20px;"></p>
+  </div>
+
+  <div class="no-video-box" id="noVideoBox">
+    <video id="noVideo" width="280" autoplay muted playsinline>
+      <source src="../assets/images/no.mp4" type="video/mp4">
+    </video>
+    <p style="margin-top:15px; color:#ffb3c6;">
+      I expected something else... try again darling 😌
+    </p>
+  </div>
+
+</div>
+
+
+<!-- ENDING -->
+<div class="ending" id="ending">
+  This is only the beginning. ❤️  
+  I love you, Nikkia.  
+  — Aniket
+</div>
+
+<button class="back" onclick="window.location.href='../journey.html'">
+  ← Back to Journey
+</button>
+
+<script>
+
+/* SPARKLES */
+for(let i=0;i<60;i++){
+ const s=document.createElement("div");
+ s.className="sparkle";
+ s.style.left=Math.random()*100+"vw";
+ s.style.top=Math.random()*100+"vh";
+ s.style.animationDuration=(1+Math.random()*3)+"s";
+ document.body.appendChild(s);
+}
+
+/* FLIP WITH HEARTBEAT */
+function flipCard(card){
+ card.classList.toggle("flipped");
+ heartRain("❤️");
+}
+
+/* REVEAL */
+function revealReason(){
+ document.getElementById("reason").style.display="block";
+}
+
+/* LOVE METER */
+let love=0;
+function increaseLove(){
+ if(love>=100)return;
+ love+=10;
+ document.getElementById("meterFill").style.width=love+"%";
+ heartRain("💖");
+}
+
+/* RAIN */
+function heartRain(symbol){
+ for(let i=0;i<40;i++){
+  const r=document.createElement("div");
+  r.className="rain";
+  r.innerText=symbol;
+  r.style.left=Math.random()*100+"vw";
+  r.style.animationDuration=(3+Math.random()*3)+"s";
+  document.body.appendChild(r);
+  setTimeout(()=>r.remove(),6000);
+ }
+}
+
+/* ENDING */
+window.addEventListener("scroll",()=>{
+ if(window.scrollY+window.innerHeight>=document.body.scrollHeight-10){
+  document.getElementById("ending").classList.add("show");
+ }
+});
+
+/* HAND VIDEO SCROLL ANIMATION */
+const handVideo = document.querySelector(".hand-video");
+
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.style.opacity="1";
+      entry.target.style.transform="translateY(0)";
+    }
+  });
+},{threshold:0.4});
+
+observer.observe(handVideo);
+
+/* 💓 PINCH HEART LOGIC */
+
+const heart = document.getElementById("pinchHeart");
+const photoArea = document.getElementById("photoPopArea");
+
+let clickCount = 0;
+const totalPhotos = 20;
+
+heart.addEventListener("click", () => {
+
+  if(clickCount < totalPhotos){
+
+    clickCount++;
+
+    const img = document.createElement("img");
+    img.src = "../assets/images/pop" + clickCount + ".jpg"; 
+    img.className = "pop-photo";
+
+    img.style.left = Math.random() * 70 + "%";
+    img.style.top = Math.random() * 200 + "px";
+    img.style.transform = "rotate(" + (Math.random()*30 -15) + "deg)";
+
+    photoArea.appendChild(img);
+
+  } else {
+      document.getElementById("finalMessage").style.display = "block";
+      heart.style.display = "none";
+  }
+
+});
+
+function specialLoveShower(){
+
+  for(let i=0;i<70;i++){
+
+    const el=document.createElement("div");
+    el.className="rain";
+
+    const symbols=["🌹","💍","❤️"];
+    el.innerText=symbols[Math.floor(Math.random()*symbols.length)];
+
+    el.style.left=Math.random()*100+"vw";
+    el.style.animationDuration=(3+Math.random()*3)+"s";
+
+    document.body.appendChild(el);
+
+    setTimeout(()=>el.remove(),6000);
+  }
+
+}
+
+function yesClicked(){
+  heartRain("💍");
+}
+
+
+/* 💌 FINAL LOVE CHECK LOGIC */
+
+let wrongAttempts = 0;
+const maxAttempts = 5;
+
+function checkFinalLove(){
+
+  const input = document.getElementById("finalLoveInput").value.trim().toLowerCase();
+  const result = document.getElementById("finalLoveResult");
+  const videoBox = document.getElementById("noVideoBox");
+  const video = document.getElementById("noVideo");
+
+  if(input === "aniket"){
+    document.getElementById("finalLoveInput").classList.add("input-success");
+    explodeName();
+    result.innerHTML = "❤️ You chose my name... forever us ❤️";
+    specialLoveShower();
+
+  } else {
+
+    wrongAttempts++;
+
+    if(wrongAttempts >= maxAttempts){
+      alert("You don't like my name I guess 🥲");
+      wrongAttempts = 0;
+      return;
+    }
+
+    videoBox.style.display = "block";
+    video.currentTime = 0;
+    video.play();
+
+    setTimeout(()=>{
+      videoBox.style.display = "none";
+    },4000);
+  }
+
+}
+
+const typingInput = document.getElementById("finalLoveInput");
+const typingSound = document.getElementById("typingHeartbeat");
+
+typingInput.addEventListener("input", ()=>{
+  typingSound.play();
+  document.querySelector(".hero img").classList.add("zoom-mode");
+});
+
+typingInput.addEventListener("blur", ()=>{
+  typingSound.pause();
+  typingSound.currentTime = 0;
+  document.querySelector(".hero img").classList.remove("zoom-mode");
+});
+
+function explodeName(){
+
+  const rect = document.getElementById("finalLoveInput").getBoundingClientRect();
+
+  for(let i=0;i<80;i++){
+
+    const p = document.createElement("div");
+    p.className="gold-particle";
+
+    const x = (Math.random()*400 - 200) + "px";
+    const y = (Math.random()*400 - 200) + "px";
+
+    p.style.left = rect.left + rect.width/2 + "px";
+    p.style.top = rect.top + rect.height/2 + "px";
+
+    p.style.setProperty("--x", x);
+    p.style.setProperty("--y", y);
+
+    document.body.appendChild(p);
+
+    setTimeout(()=>p.remove(),1500);
+  }
+
+}
+
+
+</script>
+
 </body>
 </html>
