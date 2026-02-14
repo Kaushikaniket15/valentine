@@ -1,43 +1,410 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Rose Day</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💋 Kiss Day</title>
 
-  <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/day.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Georgia',serif;
+  background:linear-gradient(to bottom,#120010,#2b0025,#120010);
+  color:white;
+  overflow-x:hidden;
+  scroll-behavior:smooth;
+}
+
+/* 🌌 SKY */
+.sky{
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 30%,rgba(255,255,255,0.15) 2px,transparent 3px),
+    radial-gradient(circle at 70% 80%,rgba(255,255,255,0.1) 2px,transparent 3px);
+  background-size:300px 300px;
+  animation:moveSky 60s linear infinite;
+  z-index:-2;
+}
+@keyframes moveSky{
+  from{background-position:0 0,0 0;}
+  to{background-position:1000px 800px,-800px -1000px;}
+}
+
+/* ✨ CURSOR TRAIL */
+.trail{
+  position:fixed;
+  width:8px;
+  height:8px;
+  background:#ff66aa;
+  border-radius:50%;
+  pointer-events:none;
+  box-shadow:0 0 10px #ff66aa,0 0 20px #ff0066;
+  animation:fadeTrail 0.8s linear forwards;
+}
+@keyframes fadeTrail{
+  to{opacity:0;transform:scale(0.2);}
+}
+
+/* HERO */
+.hero{
+  position:relative;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  overflow:hidden;
+}
+.hero img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:blur(10px) brightness(0.5);
+}
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.2),rgba(0,0,0,0.8));
+}
+.hero-content{
+  position:relative;
+  z-index:2;
+  animation:fadeIn 2s ease;
+}
+.hero h1{
+  font-size:3.5rem;
+  color:#ff9ecb;
+  text-shadow:0 0 25px rgba(255,0,100,0.7);
+}
+.hero p{margin-top:10px;font-size:1.2rem;opacity:0.85;}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(30px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* INITIALS */
+.initials{
+  font-size:5rem;
+  font-weight:bold;
+  color:#ff66aa;
+  text-shadow:0 0 30px #ff0066;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+}
+
+/* COUNTDOWN */
+.countdown{
+  font-size:1.4rem;
+  margin-top:20px;
+  color:#ffb6d9;
+}
+
+/* SECTION */
+.section{
+  text-align:center;
+  margin:100px 0;
+}
+
+/* PHOTOS */
+.photo-grid{
+  display:flex;
+  justify-content:center;
+  gap:40px;
+  flex-wrap:wrap;
+}
+.photo-grid img{
+  width:260px;
+  height:320px;
+  object-fit:cover;
+  border-radius:20px;
+  box-shadow:0 0 30px rgba(255,0,100,0.4);
+  transition:0.4s;
+}
+.photo-grid img:hover{transform:scale(1.05);}
+
+/* HOLD BUTTON */
+.kiss-btn{
+  padding:18px 50px;
+  border:none;
+  border-radius:50px;
+  font-size:1.1rem;
+  background:linear-gradient(135deg,#ff0066,#ff6699);
+  color:white;
+  cursor:pointer;
+  box-shadow:0 0 30px rgba(255,0,100,0.7);
+}
+.progress-bar{
+  width:320px;
+  height:12px;
+  background:#333;
+  margin:20px auto;
+  border-radius:20px;
+  overflow:hidden;
+}
+.progress-fill{
+  width:0%;
+  height:100%;
+  background:linear-gradient(to right,#ff0066,#ff99cc);
+  transition:width 0.1s;
+}
+.result{display:none;margin-top:20px;font-size:1.2rem;}
+
+/* LIPSTICK SECRET */
+.lipstick-area{
+  margin:80px 0;
+}
+.lip{
+  font-size:40px;
+  margin:15px;
+  cursor:pointer;
+}
+.secret-message{
+  margin-top:20px;
+  font-style:italic;
+  display:none;
+  color:#ffb6d9;
+}
+
+/* QUIZ */
+.quiz{
+  max-width:600px;
+  margin:60px auto;
+  background:rgba(255,255,255,0.08);
+  padding:30px;
+  border-radius:20px;
+}
+.quiz button{
+  display:block;
+  width:100%;
+  margin:10px 0;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  cursor:pointer;
+}
+.quiz button:hover{
+  background:rgba(255,255,255,0.15);
+}
+.quiz-result{
+  margin-top:15px;
+  text-align:center;
+}
+
+/* SHAYARI */
+.shayari{
+  margin:80px 0;
+  font-style:italic;
+  font-size:1.2rem;
+}
+
+/* KISS RAIN */
+.kiss{
+  position:fixed;
+  top:-40px;
+  font-size:28px;
+  animation:fall linear infinite;
+  z-index:999;
+}
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(360deg);}
+}
+
+.back{
+  display:block;
+  margin:60px auto;
+  padding:10px 30px;
+  border-radius:30px;
+  border:2px solid #ff6699;
+  background:transparent;
+  color:#ff99cc;
+  cursor:pointer;
+}
+</style>
 </head>
+
 <body>
 
-  <div class="day-page">
-    <h1 class="day-title">🌹 Rose Day</h1>
+<div class="sky"></div>
 
-    <p class="day-subtitle">
-      For the one who makes my life bloom
-    </p>
+<audio id="heartbeat" loop>
+  <source src="../assets/sounds/heartbeat.mp3">
+</audio>
 
-    <div class="day-card">
-      <p class="day-message">
-        My dearest <span class="queen-name"></span>,<br><br>
+<audio autoplay loop>
+  <source src="../assets/sounds/kiss.mp3">
+</audio>
 
-        Just like this rose, my love for you is soft,
-        beautiful, and endlessly growing.<br><br>
-
-        Every petal reminds me of your smile,
-        every fragrance reminds me of your presence,
-        and every thorn reminds me that love is precious
-        because it must be protected.<br><br>
-
-        This rose is not just a flower,
-        it’s my heart — placed gently in your hands ❤️
-      </p>
-    </div>
-
-    <button class="back-btn" onclick="window.location.href='../journey.html'">
-      ← Back to Our Journey
-    </button>
+<!-- HERO -->
+<div class="hero">
+  <img src="../assets/images/kiss1.jpg">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="initials">A ❤️ S</div>
+    <h1>💋 Kiss Day</h1>
+    <p>Some moments are sealed forever.</p>
+    <div class="countdown" id="countdown"></div>
   </div>
+</div>
 
-  <script src="../js/dayEffects.js"></script>
+<!-- PHOTOS -->
+<div class="section">
+  <div class="photo-grid">
+    <img src="../assets/images/kiss1.jpg">
+    <img src="../assets/images/kiss2.jpg">
+  </div>
+</div>
+
+<!-- HOLD SECTION -->
+<div class="section">
+  <button class="kiss-btn" id="kissBtn">Press & Hold to Seal Our Forever 💋</button>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <div class="result" id="result">
+    You sealed our forever ❤️ <br>
+    📸 Screenshot & send it to me 😌
+  </div>
+</div>
+
+<!-- LIPSTICK THOUGHTS -->
+<div class="section lipstick-area">
+  <p>Tap the lipstick marks to reveal hidden thoughts 💄</p>
+  <span class="lip">💄</span>
+  <span class="lip">💄</span>
+  <span class="lip">💄</span>
+  <span class="lip">💄</span>
+  <div class="secret-message" id="secretMessage"></div>
+</div>
+
+<!-- QUIZ -->
+<div class="quiz">
+  <h3>💕 Kiss Compatibility Quiz</h3>
+  <p>Where would I love to steal a kiss?</p>
+  <button onclick="checkQuiz(0)">Under the stars 🌟</button>
+  <button onclick="checkQuiz(1)">In the rain ☔</button>
+  <button onclick="checkQuiz(2)">Anywhere with you 💕</button>
+  <div class="quiz-result" id="quizResult"></div>
+</div>
+
+<!-- SHAYARI -->
+<div class="section shayari">
+  लबों से लब मिले तो बात बनती है,<br>
+  साँसों में साँस मिले तो रात बनती है,<br>
+  यूँ ही नहीं कहते इश्क़ को जादू,<br>
+  एक किस से भी मुलाक़ात बनती है 💋<br><br>
+  — Aniket
+</div>
+
+<button class="back" onclick="window.location.href='../journey.html'">
+  ← Back to Journey
+</button>
+
+<script>
+/* CURSOR TRAIL */
+document.addEventListener("mousemove",e=>{
+ const t=document.createElement("div");
+ t.className="trail";
+ t.style.left=e.pageX+"px";
+ t.style.top=e.pageY+"px";
+ document.body.appendChild(t);
+ setTimeout(()=>t.remove(),800);
+});
+
+/* COUNTDOWN */
+const target=new Date(Date.now()+(33*60*60*1000));
+function updateCountdown(){
+ const diff=target-new Date();
+ const h=Math.floor(diff/(1000*60*60));
+ const m=Math.floor((diff%(1000*60*60))/(1000*60));
+ document.getElementById("countdown").innerText=
+ "Next Kiss Countdown: "+h+" hrs "+m+" mins ❤️";
+}
+setInterval(updateCountdown,60000);
+updateCountdown();
+
+/* HOLD LOGIC */
+let progress=0,interval,done=false;
+const btn=document.getElementById("kissBtn");
+const fill=document.getElementById("progressFill");
+const result=document.getElementById("result");
+const heartbeat=document.getElementById("heartbeat");
+
+function startHold(){
+ if(done)return;
+ heartbeat.play();
+ interval=setInterval(()=>{
+  progress+=2;
+  fill.style.width=progress+"%";
+  if(progress>=100){
+   clearInterval(interval);
+   done=true;
+   result.style.display="block";
+   kissRain();
+  }
+ },80);
+}
+function stopHold(){
+ clearInterval(interval);
+ heartbeat.pause();
+ heartbeat.currentTime=0;
+ if(!done){
+  progress=0;
+  fill.style.width="0%";
+ }
+}
+btn.addEventListener("mousedown",startHold);
+btn.addEventListener("mouseup",stopHold);
+btn.addEventListener("mouseleave",stopHold);
+btn.addEventListener("touchstart",startHold);
+btn.addEventListener("touchend",stopHold);
+
+/* LIPSTICK THOUGHTS */
+const secrets=[
+"I still remember our first kiss.",
+"Your smile makes my heart race.",
+"That moment replays in my mind.",
+"You are my favorite addiction."
+];
+document.querySelectorAll(".lip").forEach((lip,i)=>{
+ lip.addEventListener("click",()=>{
+   const msg=document.getElementById("secretMessage");
+   msg.style.display="block";
+   msg.innerText=secrets[i];
+ });
+});
+
+/* QUIZ */
+function checkQuiz(choice){
+ const r=document.getElementById("quizResult");
+ if(choice===2){
+   r.innerHTML="💖 Soulmate level unlocked!";
+   kissRain();
+ }else{
+   r.innerHTML="More kisses required 😌";
+ }
+}
+
+/* KISS RAIN */
+function kissRain(){
+ for(let i=0;i<50;i++){
+  const k=document.createElement("div");
+  k.className="kiss";
+  k.innerText="💋";
+  k.style.left=Math.random()*100+"vw";
+  k.style.animationDuration=(3+Math.random()*3)+"s";
+  document.body.appendChild(k);
+  setTimeout(()=>k.remove(),6000);
+ }
+}
+</script>
+
 </body>
 </html>
